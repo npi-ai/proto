@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "proto"
+version = "0.1.0"
+description = ""
+authors = ["wenfeng <sxian.wang@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+google = "^3.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
