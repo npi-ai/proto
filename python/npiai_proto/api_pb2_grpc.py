@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from . import api_pb2 as api_dot_api__pb2
+import api_pb2 as api__pb2
 
 
 class AppServerStub(object):
@@ -16,13 +16,13 @@ class AppServerStub(object):
         """
         self.Chat = channel.unary_unary(
                 '/npi.core.api.AppServer/Chat',
-                request_serializer=api_dot_api__pb2.Request.SerializeToString,
-                response_deserializer=api_dot_api__pb2.Response.FromString,
+                request_serializer=api__pb2.Request.SerializeToString,
+                response_deserializer=api__pb2.Response.FromString,
                 )
         self.GetAppSchema = channel.unary_unary(
                 '/npi.core.api.AppServer/GetAppSchema',
-                request_serializer=api_dot_api__pb2.AppSchemaRequest.SerializeToString,
-                response_deserializer=api_dot_api__pb2.AppSchemaResponse.FromString,
+                request_serializer=api__pb2.AppSchemaRequest.SerializeToString,
+                response_deserializer=api__pb2.AppSchemaResponse.FromString,
                 )
 
 
@@ -46,13 +46,13 @@ def add_AppServerServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'Chat': grpc.unary_unary_rpc_method_handler(
                     servicer.Chat,
-                    request_deserializer=api_dot_api__pb2.Request.FromString,
-                    response_serializer=api_dot_api__pb2.Response.SerializeToString,
+                    request_deserializer=api__pb2.Request.FromString,
+                    response_serializer=api__pb2.Response.SerializeToString,
             ),
             'GetAppSchema': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAppSchema,
-                    request_deserializer=api_dot_api__pb2.AppSchemaRequest.FromString,
-                    response_serializer=api_dot_api__pb2.AppSchemaResponse.SerializeToString,
+                    request_deserializer=api__pb2.AppSchemaRequest.FromString,
+                    response_serializer=api__pb2.AppSchemaResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -76,8 +76,8 @@ class AppServer(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/npi.core.api.AppServer/Chat',
-            api_dot_api__pb2.Request.SerializeToString,
-            api_dot_api__pb2.Response.FromString,
+            api__pb2.Request.SerializeToString,
+            api__pb2.Response.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -93,7 +93,7 @@ class AppServer(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/npi.core.api.AppServer/GetAppSchema',
-            api_dot_api__pb2.AppSchemaRequest.SerializeToString,
-            api_dot_api__pb2.AppSchemaResponse.FromString,
+            api__pb2.AppSchemaRequest.SerializeToString,
+            api__pb2.AppSchemaResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

@@ -4,3 +4,7 @@
 *.iml
 out
 gen
+
+__pycache__
+venv
+dist
