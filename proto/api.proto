@@ -37,6 +37,7 @@ enum AppType {
   SLACK = 4;
   DISCORD = 5;
   TWITTER = 6;
+  WEB_BROWSER = 7;
 }
 
 message AppSchemaRequest {

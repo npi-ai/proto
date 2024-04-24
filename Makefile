@@ -18,7 +18,7 @@ generate-py:
 	python -m grpc_tools.protoc -I=${NPI_PROTO_ROOT}/include \
 		  -I=${NPI_PROTO_ROOT} \
 		  -I=${NPI_PROTO_ROOT}/proto \
- 		 --python_out=${NPI_PROTO_ROOT}/python/api \
- 		 --pyi_out=${NPI_PROTO_ROOT}/python/api \
- 		 --grpc_python_out=${NPI_PROTO_ROOT}/python/api \
+ 		 --python_out=${NPI_PROTO_ROOT}/python/npiai_proto \
+ 		 --pyi_out=${NPI_PROTO_ROOT}/python/npiai_proto \
+ 		 --grpc_python_out=${NPI_PROTO_ROOT}/python/npiai_proto \
  		 api.proto
