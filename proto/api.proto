@@ -75,7 +75,7 @@ message Response {
     string thread_id = 3;
     oneof response {
         ChatResponse chat_response = 10;
-        ActionResponse action_response = 11;
+        ActionRequiredResponse action_response = 11;
         google.protobuf.Empty empty = 99;
     }
 }
@@ -85,35 +85,16 @@ message ChatResponse {
 }
 
 enum ActionType {
-  UNKNOWN_ACTION = 0;
-  HUMAN_FEEDBACK = 1;
-  SAFEGUARD = 2;
-}
-
-message ActionResponse {
-  ActionType type = 1;
-  string action_id = 2;
-  oneof response {
-    HumanFeedbackAction human_feedback = 10;
-    SafeguardAction safeguard = 11;
-  }
-}
-
-enum HumanFeedbackActionType {
-    UNKNOWN_FEEDBACK = 0;
-    INPUT = 1;
+    UNKNOWN_ACTION = 0;
+    INFORMATION = 1;
     SINGLE_SELECTION = 2;
     MULTIPLE_SELECTION = 3;
     CONFIRMATION = 4;
 }
 
-message HumanFeedbackAction {
-  HumanFeedbackActionType type = 1;
-  string notice = 2;
-  repeated string options = 3;
-}
-
-message SafeguardAction {
-  string action_id = 1;
-  string safeguard = 2;
+message ActionRequiredResponse {
+  ActionType type = 1;
+  string action_id = 2;
+  string message = 3;
+  repeated string options = 4;
 }

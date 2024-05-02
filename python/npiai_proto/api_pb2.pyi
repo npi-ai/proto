@@ -37,16 +37,10 @@ class ResponseCode(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
 class ActionType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     __slots__ = ()
     UNKNOWN_ACTION: _ClassVar[ActionType]
-    HUMAN_FEEDBACK: _ClassVar[ActionType]
-    SAFEGUARD: _ClassVar[ActionType]
-
-class HumanFeedbackActionType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = ()
-    UNKNOWN_FEEDBACK: _ClassVar[HumanFeedbackActionType]
-    INPUT: _ClassVar[HumanFeedbackActionType]
-    SINGLE_SELECTION: _ClassVar[HumanFeedbackActionType]
-    MULTIPLE_SELECTION: _ClassVar[HumanFeedbackActionType]
-    CONFIRMATION: _ClassVar[HumanFeedbackActionType]
+    INFORMATION: _ClassVar[ActionType]
+    SINGLE_SELECTION: _ClassVar[ActionType]
+    MULTIPLE_SELECTION: _ClassVar[ActionType]
+    CONFIRMATION: _ClassVar[ActionType]
 REQUEST_UNKNOWN: RequestCode
 CHAT: RequestCode
 FETCH: RequestCode
@@ -66,13 +60,10 @@ MESSAGE: ResponseCode
 ACTION_REQUIRED: ResponseCode
 FINISHED: ResponseCode
 UNKNOWN_ACTION: ActionType
-HUMAN_FEEDBACK: ActionType
-SAFEGUARD: ActionType
-UNKNOWN_FEEDBACK: HumanFeedbackActionType
-INPUT: HumanFeedbackActionType
-SINGLE_SELECTION: HumanFeedbackActionType
-MULTIPLE_SELECTION: HumanFeedbackActionType
-CONFIRMATION: HumanFeedbackActionType
+INFORMATION: ActionType
+SINGLE_SELECTION: ActionType
+MULTIPLE_SELECTION: ActionType
+CONFIRMATION: ActionType
 
 class Request(_message.Message):
     __slots__ = ("code", "request_id", "thread_id", "chat_request", "action_result_request", "empty")
@@ -132,9 +123,9 @@ class Response(_message.Message):
     request_id: str
     thread_id: str
     chat_response: ChatResponse
-    action_response: ActionResponse
+    action_response: ActionRequiredResponse
     empty: _empty_pb2.Empty
-    def __init__(self, code: _Optional[_Union[ResponseCode, str]] = ..., request_id: _Optional[str] = ..., thread_id: _Optional[str] = ..., chat_response: _Optional[_Union[ChatResponse, _Mapping]] = ..., action_response: _Optional[_Union[ActionResponse, _Mapping]] = ..., empty: _Optional[_Union[_empty_pb2.Empty, _Mapping]] = ...) -> None: ...
+    def __init__(self, code: _Optional[_Union[ResponseCode, str]] = ..., request_id: _Optional[str] = ..., thread_id: _Optional[str] = ..., chat_response: _Optional[_Union[ChatResponse, _Mapping]] = ..., action_response: _Optional[_Union[ActionRequiredResponse, _Mapping]] = ..., empty: _Optional[_Union[_empty_pb2.Empty, _Mapping]] = ...) -> None: ...
 
 class ChatResponse(_message.Message):
     __slots__ = ("message",)
@@ -142,32 +133,14 @@ class ChatResponse(_message.Message):
     message: str
     def __init__(self, message: _Optional[str] = ...) -> None: ...
 
-class ActionResponse(_message.Message):
-    __slots__ = ("type", "action_id", "human_feedback", "safeguard")
+class ActionRequiredResponse(_message.Message):
+    __slots__ = ("type", "action_id", "message", "options")
     TYPE_FIELD_NUMBER: _ClassVar[int]
     ACTION_ID_FIELD_NUMBER: _ClassVar[int]
-    HUMAN_FEEDBACK_FIELD_NUMBER: _ClassVar[int]
-    SAFEGUARD_FIELD_NUMBER: _ClassVar[int]
+    MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    OPTIONS_FIELD_NUMBER: _ClassVar[int]
     type: ActionType
     action_id: str
-    human_feedback: HumanFeedbackAction
-    safeguard: SafeguardAction
-    def __init__(self, type: _Optional[_Union[ActionType, str]] = ..., action_id: _Optional[str] = ..., human_feedback: _Optional[_Union[HumanFeedbackAction, _Mapping]] = ..., safeguard: _Optional[_Union[SafeguardAction, _Mapping]] = ...) -> None: ...
-
-class HumanFeedbackAction(_message.Message):
-    __slots__ = ("type", "notice", "options")
-    TYPE_FIELD_NUMBER: _ClassVar[int]
-    NOTICE_FIELD_NUMBER: _ClassVar[int]
-    OPTIONS_FIELD_NUMBER: _ClassVar[int]
-    type: HumanFeedbackActionType
-    notice: str
+    message: str
     options: _containers.RepeatedScalarFieldContainer[str]
-    def __init__(self, type: _Optional[_Union[HumanFeedbackActionType, str]] = ..., notice: _Optional[str] = ..., options: _Optional[_Iterable[str]] = ...) -> None: ...
-
-class SafeguardAction(_message.Message):
-    __slots__ = ("action_id", "safeguard")
-    ACTION_ID_FIELD_NUMBER: _ClassVar[int]
-    SAFEGUARD_FIELD_NUMBER: _ClassVar[int]
-    action_id: str
-    safeguard: str
-    def __init__(self, action_id: _Optional[str] = ..., safeguard: _Optional[str] = ...) -> None: ...
+    def __init__(self, type: _Optional[_Union[ActionType, str]] = ..., action_id: _Optional[str] = ..., message: _Optional[str] = ..., options: _Optional[_Iterable[str]] = ...) -> None: ...
